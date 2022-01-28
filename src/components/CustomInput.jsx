@@ -1,11 +1,12 @@
 import React from 'react';
 
-const CustomInput = ({ clickHandler, onChangeHandler, value, btnClassName, inputClassName, name, id, placeholder }) => {
+const CustomInput = ({ clickHandler, onChangeHandler, value, name, id, placeholder, type }) => {
   return (
-    <div>
-      <button className={btnClassName} onClick={clickHandler}></button>
+    <div className='custom-input-1'>
+      <button className='btn-1' onClick={clickHandler}></button>
       <input
-        className={inputClassName}
+        type={type}
+        className='input-field-1'
         name={name}
         id={id}
         placeholder={placeholder}

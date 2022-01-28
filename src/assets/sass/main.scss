@@ -1,5 +1,27 @@
-$light-blue: #4d5066;
-$dark-blue: #25273c;
+$blue: #3a7bfd;
+$light-blue: hsl(233, 14%, 35%);
+$light-blue-2: #cacde8;
+$light-blue-3: hsl(233, 11%, 52%);
+$dark-blue: hsl(235, 24%, 19%);
+$dark-blue-2: hsl(235, 21%, 11%);
+$white: hsl(0, 0%, 100%);
+
+%btn {
+  min-width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: $dark-blue;
+}
+
+%btn-2 {
+  background: transparent;
+  border: none;
+  color: $light-blue;
+}
+
+:root {
+  font-size: 16px;
+}
 
 * {
   padding: 0;
@@ -18,14 +40,176 @@ body {
 
 button {
   cursor: pointer;
+  font-family: inherit;
 }
 
+
+
+.background-top {
+  height: 30vh;
+  width: 100vw;
+  z-index: 1;
+  position: absolute;
+  background: url('../images/bg-desktop-dark.jpg') no-repeat;
+  background-size: cover;
+}
+
+
+
+// CONTAINERS
+.container {
+  background-color: $dark-blue-2;
+  min-height: 100vh;
+}
+
+
+
+// WRAPPERS
+.wrapper {
+  max-width: 600px;
+  padding: 2em 1em;
+  margin: 0 auto;
+  z-index: 2;
+  position: relative;
+
+  &__title {
+    color: $white;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 10px;
+    font-weight: 700;
+  }
+}
+
+
+// CARDS
+.card {
+  &-1 {
+    background-color: $dark-blue;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+  
+  
+    &__list {
+      list-style-type: none;
+    }
+  
+    &__item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2em 1.5em;
+      color: $light-blue-2;
+      border-bottom: 1px solid $light-blue;
+    }
+  
+    &__content {
+      padding: 2em;
+    }
+  }
+
+  &-2 {
+    background-color: $dark-blue;
+    border-radius: 5px;
+    padding: 2em;
+  }
+}
+
+
+// BUTTONS
 .btn {
   &-1 {
-    width: 20px;
-    height: 20px;
+    @extend %btn;
     border: 1px solid $light-blue;
-    border-radius: 50%;
-    background-color: $dark-blue;
+    margin-right: 0.5rem
   }
+
+  &-2 {
+    @extend %btn;
+    border: none;
+  }
+
+  &-3 {
+    @extend %btn-2;
+  }
+
+  &-4 {
+    @extend %btn-2;
+    font-size: 1.3rem;
+    margin: 0 0.5rem;
+    font-weight: 700;
+  }
+}
+
+
+// INPUTS
+
+.input-field-1 {
+  background-color: transparent;
+  border: none;
+  font-family: inherit;
+  color: $light-blue;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.custom-input-1 {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  background-color: $dark-blue;
+  padding: 2.5em 1.5em;
+  margin-bottom: 2rem;
+  border-radius: 5px;
+}
+
+
+
+// UTILITIES
+.check-img {
+  width: 18px;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: $light-blue-3;
+}
+
+.highlight-1 {
+  color: $light-blue-2;
+}
+
+.bg-gradient {
+  background: linear-gradient(rgb(87, 221, 255), rgb(192, 88, 243));
+}
+
+.wrap-word {
+  word-break: break-all;
+}
+
+.active {
+  color: $blue;
+}
+
+
+
+// FLEX CONTAINERS
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-align-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-container-1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

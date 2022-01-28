@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import uniqid from 'uniqid';
 import CustomInput from './CustomInput';
 import ListItem from './ListItem';
@@ -10,9 +10,21 @@ function Todo() {
   const [showAll, setShowAll] = useState(true);
   const [onlyShowActive, setOnlyShowActive] = useState(false)
 
+  useEffect(() => {
+    window.addEventListener('keyup', event => {
+      if (event.key === 'Enter') {
+        addTodo();
+      }
+    });
+  }, [text])
+
+
+
   const updateText = event => {
     setText(event.target.value)
   }
+
+
 
   const addTodo = () => {
     if (text !== '') {
@@ -30,17 +42,24 @@ function Todo() {
     }
   }
 
+
+
   const markAsDone = event => {
     setTodos(
       todos.map(todo => {
-        if (todo.id === event.currentTarget.id && !todo.isMarkedAsDone) {
-          todo.isMarkedAsDone = true;
-          setNumberOfUncompletedTask(numberOfUncompletedTask - 1)
+        if (todo.id === event.currentTarget.id) {
+          todo.isMarkedAsDone = !todo.isMarkedAsDone;
+          setNumberOfUncompletedTask(
+            todo.isMarkedAsDone ?
+              numberOfUncompletedTask - 1 : numberOfUncompletedTask + 1
+          )
         }
         return todo;
       }))
 
   }
+
+
 
   const deleteTodo = event => {
     setTodos(todos.filter(todo => {
@@ -53,30 +72,41 @@ function Todo() {
     }))
   }
 
+
+
   const deleteCompleted = () => {
     setTodos(todos.filter(todo => !todo.isMarkedAsDone))
   }
+
+
 
   const showAllTodo = () => {
     setShowAll(true);
     setOnlyShowActive(false);
   }
 
+
+
   const showActive = () => {
     setOnlyShowActive(true);
     setShowAll(false);
   }
+
+
 
   const showCompleted = () => {
     setShowAll(false);
     setOnlyShowActive(false);
   }
 
+
+
   const listItemComponent = todo => {
     return (
       <ListItem
         key={todo.id}
         text={todo.text}
+        itemClassName='card-1__item'
         isMarkedAsDone={todo.isMarkedAsDone}
         markAsDone={markAsDone}
         deleteTodo={deleteTodo}
@@ -85,24 +115,27 @@ function Todo() {
     )
   }
 
+
+
   return (
-    <div>
-      <div>
-        <h1>TODO</h1>
+    <div className='container'>
+      <div className='background-top'></div>
+      <div className='wrapper'>
+        <h1 className='wrapper__title'>TODO</h1>
 
         <CustomInput
+          type='text'
           clickHandler={addTodo}
           onChangeHandler={updateText}
           btnClassName='btn-1'
-          inputClassName='input-field-1'
           name='todo'
           id='todo'
           placeholder='Create a new todo'
           value={text}
         />
 
-        <div>
-          <ul>
+        <div className='card-1'>
+          <ul className='card-1__list'>
             {
               todos.map(todo => {
                 if (showAll) {
@@ -117,16 +150,16 @@ function Todo() {
             }
           </ul>
 
-          <div>
-            <span>{numberOfUncompletedTask} uncompleted task</span>
-            <button onClick={deleteCompleted}>Clear Completed</button>
+          <div className='card-1__content flex-container-1'>
+            <span className='highlight-1'>{numberOfUncompletedTask} uncompleted task</span>
+            <button className='btn-3' onClick={deleteCompleted}>Clear Completed</button>
           </div>
         </div>
 
-        <div>
-          <button onClick={showAllTodo}>All</button>
-          <button onClick={showActive}>Active</button>
-          <button onClick={showCompleted}>Completed</button>
+        <div className='card-2 flex-center'>
+          <button className={showAll ? 'btn-4 active' : 'btn-4'} onClick={showAllTodo}>All</button>
+          <button className={onlyShowActive ? 'btn-4 active' : 'btn-4'} onClick={showActive}>Active</button>
+          <button className={!showAll && !onlyShowActive ? 'btn-4 active' : 'btn-4'} onClick={showCompleted}>Completed</button>
         </div>
       </div>
     </div>
