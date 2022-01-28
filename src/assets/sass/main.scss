@@ -1,0 +1,31 @@
+$light-blue: #4d5066;
+$dark-blue: #25273c;
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+.btn {
+  &-1 {
+    width: 20px;
+    height: 20px;
+    border: 1px solid $light-blue;
+    border-radius: 50%;
+    background-color: $dark-blue;
+  }
+}
