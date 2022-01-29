@@ -1,2 +1,2 @@
 # This is a React app
-This is my first SPA in react.
+This is my first SPA in React.
