@@ -1,14 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import uniqid from 'uniqid';
 import CustomInput from './CustomInput';
 import ListItem from './ListItem';
+
+const filterInitialState = {
+  showAll: true,
+  onlyShowActiveOnly: false
+}
+
+
+const filterReducer = (state, action) => {
+  switch (action) {
+    case 'SHOW_ALL':
+      return {
+        showAll: true,
+        onlyShowActive: false
+      }
+    case 'SHOW_ACTIVES':
+      return {
+        showAll: false,
+        onlyShowActive: true
+      }
+    case 'SHOW_COMPLETED':
+      return {
+        showAll: false,
+        onlyShowActiveOnly: false
+      }
+    default:
+      return state;
+  }
+}
+
+
 
 function Todo() {
   const [text, setText] = useState('');
   const [todos, setTodos] = useState([]);
   const [numberOfUncompletedTask, setNumberOfUncompletedTask] = useState(0)
-  const [showAll, setShowAll] = useState(true);
-  const [onlyShowActive, setOnlyShowActive] = useState(false)
+  const [filter, filterDispatch] = useReducer(filterReducer, filterInitialState)
 
   useEffect(() => {
     window.addEventListener('keyup', event => {
@@ -79,28 +108,6 @@ function Todo() {
   }
 
 
-
-  const showAllTodo = () => {
-    setShowAll(true);
-    setOnlyShowActive(false);
-  }
-
-
-
-  const showActive = () => {
-    setOnlyShowActive(true);
-    setShowAll(false);
-  }
-
-
-
-  const showCompleted = () => {
-    setShowAll(false);
-    setOnlyShowActive(false);
-  }
-
-
-
   const listItemComponent = todo => {
     return (
       <ListItem
@@ -138,9 +145,9 @@ function Todo() {
           <ul className='card-1__list'>
             {
               todos.map(todo => {
-                if (showAll) {
+                if (filter.showAll) {
                   return listItemComponent(todo);
-                } else if (onlyShowActive) {
+                } else if (filter.onlyShowActive) {
                   return !todo.isMarkedAsDone && listItemComponent(todo);
                 } else {
                   // only show completed task
@@ -157,9 +164,9 @@ function Todo() {
         </div>
 
         <div className='card-2 flex-center'>
-          <button className={showAll ? 'btn-4 active' : 'btn-4'} onClick={showAllTodo}>All</button>
-          <button className={onlyShowActive ? 'btn-4 active' : 'btn-4'} onClick={showActive}>Active</button>
-          <button className={!showAll && !onlyShowActive ? 'btn-4 active' : 'btn-4'} onClick={showCompleted}>Completed</button>
+          <button className={filter.showAll ? 'btn-4 active' : 'btn-4'} onClick={() => filterDispatch('SHOW_ALL')}>All</button>
+          <button className={filter.onlyShowActive ? 'btn-4 active' : 'btn-4'} onClick={() => filterDispatch('SHOW_ACTIVES')}>Active</button>
+          <button className={!filter.showAll && !filter.onlyShowActive ? 'btn-4 active' : 'btn-4'} onClick={() => filterDispatch('SHOW_COMPLETED')}>Completed</button>
         </div>
       </div>
     </div>
